@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block start %}
+
+    <h1>This HTML page is returned by Django</h1>
+    <p>Django is really nice</p>
+    <p>Contact page </p>
+
+    <p>
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{%url 'about' %}">About</a>
+    </p>
+</body>
+</html>
+
+{% endblock %}
