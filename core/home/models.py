@@ -47,4 +47,12 @@ class Student(models.Model):
 
 # colleges = ["UCL", "Imperial", "Berkley", "Austin at TX", "Michigan"]
 # departments = ["CS", "Electrical", "Civil", "Mechanical", "Aerospace"]
-skills = ["Python", "English", "Technical Engineering", "Reading drawings", "Procedures knowledge"]
+# skills = ["Python", "English", "Technical Engineering", "Reading drawings", "Procedures knowledge"]
+
+
+class Contact(models.Model):
+    name = models.CharField(max_length=100)
+    age = models.IntegerField()
+    gender = models.CharField(max_length=100)
+    comment = models.CharField(max_length=1000)
+

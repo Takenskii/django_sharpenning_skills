@@ -10,7 +10,12 @@
         <a href="{% url 'index' %}">Home</a>
         <a href="{%url 'about' %}">About</a>
     </p>
-</body>
-</html>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{form}}
+
+        <button type="submit">Submit</button>
+    </form>
 
 {% endblock %}

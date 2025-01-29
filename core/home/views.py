@@ -1,7 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
 import random
+from home.forms import ContactForm
+from home.models import Contact
+
+
 # Create your views here.
 
 # class HomeView(View):
@@ -30,9 +34,21 @@ def index(request):
 def about(request):
     # return HttpResponse("Hi from Django server this is a about page!")
     return render(request, 'about.html')
+
 def contact(request):
     # return HttpResponse("Hi from Django server this is a contact page!")
-    return render(request, 'contact.html')
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data)
+            contact = Contact(**form.cleaned_data)
+            contact.save()
+            return redirect('/contact/')
+            
+    form = ContactForm()
+    context = {'form':form}
+    return render(request, 'contact.html', context)
+
 def dynamic_url(request, id, name):
     print(f"This is the value that we got in the func -> {id}")
     return render(request, 'dynamic_url.html', context={"id":id, "name":name})
