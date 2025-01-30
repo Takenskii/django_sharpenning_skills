@@ -11,11 +11,14 @@
         <a href="{%url 'about' %}">About</a>
     </p>
 
-    <form method="POST">
-        {% csrf_token %}
-        {{form}}
+    <div>
+        <form method="POST", enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form}}
+    
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 
-        <button type="submit">Submit</button>
-    </form>
 
 {% endblock %}

@@ -38,11 +38,10 @@ def about(request):
 def contact(request):
     # return HttpResponse("Hi from Django server this is a contact page!")
     if request.method == "POST":
-        form = ContactForm(request.POST)
+        form = ContactForm(request.POST, request.FILES)
         if form.is_valid():
-            print(form.cleaned_data)
-            contact = Contact(**form.cleaned_data)
-            contact.save()
+            # contact = Contact(**form.cleaned_data)
+            form.save()
             return redirect('/contact/')
             
     form = ContactForm()

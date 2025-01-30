@@ -53,6 +53,8 @@ class Student(models.Model):
 class Contact(models.Model):
     name = models.CharField(max_length=100)
     age = models.IntegerField()
-    gender = models.CharField(max_length=100)
+    gender = models.CharField(max_length=100, choices = (
+        ("Male", "Male"),
+        ("Female", "Female")), default="Male")
     comment = models.CharField(max_length=1000)
-
+    file = models.FileField(upload_to="files", null=True, blank=True)

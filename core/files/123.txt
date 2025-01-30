@@ -1,0 +1,161 @@
+
+from home.models import *
+
+1)   student = Student.objects.all().count()
+-> 1000
+
+2)   student = Student.objects.all().order_by("age")
+-> will show all students sorted by age in ascending order
+
+3)   student = Student.objects.all().order_by("-age")
+-> will show all students sorted by age in descending order
+
+4)   student = Student.objects.filter(name="Daniel Hofman")
+-> will show all students filtered by name "Daniel Hofman  -> Daniel Hofman
+
+5)   But what if there're a lot of Daniels in the list and we want to fetch all of them
+     student = Student.objects.filter(name__icontains="Daniel")
+-> will show all students filtered by name Daniel -> Daniel Hofman, Daniel Zukerberg, Daniel Musk etc..
+
+    if you want to print all of them traverse through a student like:
+	
+	for stu in student:
+		print(stu.name)
+
+6)   student = Student.objects.filter(name__icontains="Daniel", gender="Female")
+	it will show all students with a full name containing Daniel and gender=Female
+
+7)   student = Student.objects.filter(name__icontains="Daniel").exclude(gender="Female")
+	it will filter all students with a full name containing Daniel and gender Male
+	
+	for stu in student:
+		print(f"the name is {stu.name} and the age is: {stu.age}")
+-> the name is Daniel Zukerberg and the age is 24
+
+8)   Let`s get the students who's age is >= 24, but not in ordered sequence :
+
+	student = Student.objects.filter(age__gte = 24)
+	
+	for stu in student:
+		print(f"the name is {stu.name} and the age is: {stu.age}")
+age__gte -> age greater than or equal to
+print all students who's age is >= 24 in chaotic order
+-> the name is Allison Baker and the age is 27
+-> the name is Kimberly Clark and the age is 25	
+
+9) if we want to fetch students who's age is >= 24 in ascending order we need to add order_by:
+	
+	student = Student.objects.filter(age__gte=24).order_by("age")
+
+-> the name is Kimberly Clark and the age is 25	
+-> the name is Allison Baker and the age is 27
+
+10) Let's say we want to print all students by name in alphabetical order:
+	
+	student = Student.objects.filter(age__gte=24).order_by("name")
+
+-> Abgeeth Gukpa, 24
+-> Allison baker, 24
+
+11) Let's get students who's age is <= 20
+
+	student = Student.objects.filter(age__lte=20)
+
+-> Rice James, 20
+-> Cole Palmer, 19
+.....
+
+12) if we want to get students who's age is in the range(20 <-> 25) in ascending order by age
+
+	student = Students.objects.filter(age__gte=20, age__lte=25).oder_by("age")
+
+-> Oliver Kahnn, 20
+-> Samuel Etoo, 21
+-> Lucas Mario, 25
+
+13) student = Students.objects.filter(age__gte=20, age__lte=25).oder_by("name")
+
+-> Alison Baker, 24
+-> Andrey Arshavin, 23
+-> Bastian Schweinshteiger, 25
+......
+
+14) What if we want to fetch all students who's age is in between (18 <-> 20) and 
+	exclude names starting from B
+
+	student = Students.objects.filter(age__gte=18, age__lte=20).exclude(name__startswith="B").order_by("name")
+
+--> Arizabalaga Cepa, 18
+--> Caisedo Lee, 20
+
+15) student = Student.objects.filter(date_of_birth__lte = '1976-07-22')
+    student.order_by('date_of_birth')
+    student[0].date_of_birth
+
+
+			LET`S NOW FILTER THE FOREIGN KEY AS WELL
+
+1) We want to get students who`s department is CS:
+
+
+	student = Students.objects.filter(department_department_name = "CS")
+
+	student.count()
+
+-> 1297
+	department = Department.objects.all()
+	
+	for d in department:
+		student = Student.objects.filter(department = d)
+		print(student.count())
+
+->1297
+->1265
+->1274
+->1272
+->1289
+
+	for d in department:
+		student = Student.objects.filter(department = d)
+		print(f"Student count: {student.count()}, Department: {d.department_name}")
+->Student count : 1297, Department: CS
+->Student count : 1310, Department: Electrical
+->Student count : 1452, Department: Mechanical
+
+2) We want to fetch all students who's college has "IIT" in it's name
+
+	from home.models import *
+	student = Student.objects.filter(college_college_name__icontains="IIT")
+	<Explanation: as college is a foreignkey, to search in college_name we should type college__colege_name>
+	student.count()
+-> 2589
+
+3) We want to fetch all students who's mail ends with email.com
+	
+	student = Students.objects.filter(email__endswith="gmail.com") 
+	student.count()
+-> 20
+	for stu in student:
+		print(stu.name, stu.email)
+		
+-> David Roberts, ricardo@gmail.com
+........
+
+
+              OR mode
+              
+ 1) Fetch a student who's age is <= 20 OR his name is Michael
+ 
+ from django.db.models import Q
+ 
+ student = Student.objects.filter(Q(age__lte = 20) | Q(name=Michael))
+
+	
+	                              Overwrite save and update methods
+
+
+
+
+
+
+	    
